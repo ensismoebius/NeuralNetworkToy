@@ -18,6 +18,7 @@ void populateExamples(std::vector<example> &examples)
 
     examples[0].target = arma::Mat<float>(1, 1);
     examples[0].target.at(0, 0) = 1;
+    // examples[0].target.at(1, 0) = 1;
 
     examples[1].input = arma::Mat<float>(2, 1);
     examples[1].input.at(0, 0) = 1;
@@ -25,6 +26,7 @@ void populateExamples(std::vector<example> &examples)
 
     examples[1].target = arma::Mat<float>(1, 1);
     examples[1].target.at(0, 0) = 0;
+    // examples[1].target.at(1, 0) = 0;
 }
 
 #define m arma::Mat<float>
@@ -47,9 +49,7 @@ arma::Mat<float> activationFunction(arma::Mat<float> value)
 // The derivative of activation function
 arma::Mat<float> activationFunctionD(arma::Mat<float> value)
 {
-    value = activationFunction(value) % (1 - activationFunction(value));
-
-    return value;
+    return value % (1 - value);
 }
 
 void initializesWeights(m &weightsInputToHidden, m &weightsHiddenToOutput, int inputNodes, int hiddenNodes, int outputNodes)
@@ -66,7 +66,7 @@ void initializesWeights(m &weightsInputToHidden, m &weightsHiddenToOutput, int i
     weightsHiddenToOutput.fill(.5);
 }
 
-void feedFoward(m &input, m &target, m &weightsInputToHidden, m &hidden, m &weightsHiddenToOutput, m &output, float learnningRate)
+void train(m &input, m &target, m &weightsInputToHidden, m &hidden, m &weightsHiddenToOutput, m &output, float learnningRate)
 {
     // Generate the hidden outputs
     arma::Mat<float> hiddenSums = weightsInputToHidden * input;
@@ -76,29 +76,24 @@ void feedFoward(m &input, m &target, m &weightsInputToHidden, m &hidden, m &weig
     arma::Mat<float> outputSums = weightsHiddenToOutput * hidden;
     output = activationFunction(outputSums);
 
-    // Backprop
+    // Backpropagation
 
     arma::Mat<float> outputErrors = target - output;
-    outputErrors = (outputErrors % outputErrors) * 0.5;
+    arma::Mat<float> hiddenErrors = weightsHiddenToOutput.t() * outputErrors;
 
-    c("Errors:");
-    c(outputErrors);
+    // gradient = activationFunctionD(output) * outputErrors * learnningRate
+    // delta = gradient * hidden.tranposed
+    arma::Mat<float> gradientHiddenToOutput = outputErrors % activationFunctionD(output) * learnningRate;
+    arma::Mat<float> deltaHiddenToOutput = gradientHiddenToOutput * hidden.t();
+    // Update the weights
+    weightsHiddenToOutput += deltaHiddenToOutput;
 
-    arma::Mat<float> gradient = outputErrors * activationFunctionD(output);
-    c("Gradient:");
-    c(gradient);
-
-    arma::Mat<float> weightCorretions = learnningRate * gradient * hidden;
-    c("Weight corrections:");
-    c(weightCorretions);
-
-    c("Old weights:");
-    c(weightsHiddenToOutput);
-
-    weightsHiddenToOutput = weightsHiddenToOutput + weightCorretions;
-
-    c("Updated weights:");
-    c(weightCorretions);
+    // gradient = activationFunctionD(hidden) * hiddenErrors * learnningRate
+    // delta = gradient * input.tranposed
+    arma::Mat<float> gradientInputToHidden = hiddenErrors % activationFunctionD(hidden) * learnningRate;
+    arma::Mat<float> deltaInputToHidden = gradientInputToHidden * input.t();
+    // Update the weights
+    weightsInputToHidden += deltaInputToHidden;
 }
 
 int main(int argc, char const *argv[])
@@ -122,7 +117,7 @@ int main(int argc, char const *argv[])
 
     for (auto e : examples)
     {
-        feedFoward(e.input, e.target, weightsInputToHidden, hidden, weightsHiddenToOutput, output, 0.1);
+        train(e.input, e.target, weightsInputToHidden, hidden, weightsHiddenToOutput, output, 0.1);
     }
 
     return 0;
