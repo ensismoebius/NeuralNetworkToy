@@ -23,6 +23,7 @@ find_package(OpenMP)
 
 set (SRCS
 src/main.cpp
+src/lib/NeuralNetwork.cpp
 )
 
 # Include dirs
