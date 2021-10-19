@@ -45,11 +45,12 @@ namespace NeuralNetwork
         float (*activationFunction)(float value);
         float (*activationFunctionDerivative)(float value);
 
-        arma::Mat<float> activationFunc(arma::Mat<float> value);
-        arma::Mat<float> activationFuncD(arma::Mat<float> value);
+        m activationFunc(m value);
+        m activationFuncD(m value);
 
     public:
         NeuralNetwork(unsigned int inputNodes, unsigned int hiddenNodes, unsigned int outputNodes);
+        m classify(m input);
         void train(trainningSample sample, float learnningRate);
         void setActivationFunction(float (*activationFunction)(float value));
         void setActivationFunctionDerivative(float (*activationFunctionDerivative)(float value));
