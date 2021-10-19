@@ -83,17 +83,27 @@ int main(int argc, char const *argv[])
     nn.setActivationFunction(activationF);
     nn.setActivationFunctionDerivative(activationFD);
 
-    SquareDrawer sd(window, 10);
+    SquareDrawer sd(window, 5);
 
+    auto rng = std::default_random_engine{};
     // Aplication main loop
     while (window.isOpen())
     {
 
-        // Neural network tranning
-        for (auto e : examples)
+        std::shuffle(examples.begin(), examples.end(), rng);
+        for (size_t i = 0; i < 40; i++)
         {
-            nn.train(e, 0.1);
+            // Neural network tranning
+            for (auto e : examples)
+            {
+                nn.train(e, 0.00001);
+            }
         }
+
+        // Drawing the data
+        window.clear(sf::Color::Magenta);
+        sd.drawPoints(window, nn);
+        window.display();
 
         // Window and keyboard events
         sf::Event event;
@@ -105,11 +115,6 @@ int main(int argc, char const *argv[])
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Q)
                 window.close();
         }
-
-        // Drawing the data
-        window.clear(sf::Color::Magenta);
-        sd.drawPoints(window, nn);
-        window.display();
     }
 
     return 0;

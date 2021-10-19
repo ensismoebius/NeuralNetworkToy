@@ -1,3 +1,4 @@
+#include <iostream>
 #include <armadillo>
 #include "SquareDrawer.h"
 #include "NeuralNetwork.h"
@@ -17,8 +18,12 @@ SquareDrawer::SquareDrawer(sf::RenderWindow &window, unsigned int resolution)
         {
             this->rectangles[i][j] = sf::RectangleShape(sf::Vector2f(resolution, resolution));
             this->rectangles[i][j].setPosition(i * resolution, j * resolution);
-            this->rectangles[i][j].setOutlineColor(sf::Color::White);
-            this->rectangles[i][j].setFillColor(sf::Color::White);
+
+            this->rectangles[i][j].setOutlineThickness(1);
+            this->rectangles[i][j].setOutlineColor(sf::Color::Black);
+
+            this->rectangles[i][j].setFillColor(sf::Color::Black);
+            window.draw(this->rectangles[i][j]);
         }
     }
 }
@@ -32,10 +37,11 @@ void SquareDrawer::drawPoints(sf::RenderWindow &window, NeuralNetwork::NeuralNet
         {
             float x1 = i / cols;
             float x2 = j / rows;
-            float y = nn.classify(m({x1, x2})).at(0, 0);
-
-            this->rectangles[i][j].setOutlineColor(sf::Color(255 * y, 255 * y, 255 * y, 255));
+            float y = nn.classify(m({x1, x2}).t()).at(0, 0);
+            this->rectangles[i][j].setOutlineThickness(1);
+            this->rectangles[i][j].setOutlineColor(sf::Color::Black);
             this->rectangles[i][j].setFillColor(sf::Color(255 * y, 255 * y, 255 * y, 255));
+            window.draw(this->rectangles[i][j]);
         }
     }
 }

@@ -1,20 +1,20 @@
 #include "NeuralNetwork.h"
-
+#include <iostream>
 void NeuralNetwork::NeuralNetwork::initializesWeights()
 {
     this->weightsInputToHidden.randu(this->hiddenNodes, this->inputNodes);
     this->weightsHiddenToOutput.randu(this->outputNodes, this->hiddenNodes);
 
-    this->weightsInputToHidden *= 2;
-    this->weightsHiddenToOutput *= 2;
-    this->weightsInputToHidden -= 1;
-    this->weightsHiddenToOutput -= 1;
+    // this->weightsInputToHidden *= 2;
+    // this->weightsHiddenToOutput *= 2;
+    // this->weightsInputToHidden -= 1;
+    // this->weightsHiddenToOutput -= 1;
 
-    this->weightsInputToHidden.fill(.5);
-    this->weightsHiddenToOutput.fill(.5);
+    // this->weightsInputToHidden.fill(.5);
+    // this->weightsHiddenToOutput.fill(.5);
 
-    this->biasHidden.fill(.5);
-    this->biasOutput.fill(.5);
+    this->biasHidden.randu(this->hiddenNodes, 1);
+    this->biasOutput.randu(this->outputNodes, 1);
 }
 
 m NeuralNetwork::NeuralNetwork::activationFunc(m value)
@@ -54,7 +54,7 @@ NeuralNetwork::NeuralNetwork::NeuralNetwork(unsigned int inputNodes, unsigned in
 m NeuralNetwork::NeuralNetwork::classify(m input)
 {
     // Generating the Hidden Outputs
-    this->hidden = this->activationFunc((weightsInputToHidden * input) + this->biasHidden);
+    this->hidden = this->activationFunc((this->weightsInputToHidden * input) + this->biasHidden);
 
     // Generating the output's output!
     this->output = this->activationFunc((this->weightsHiddenToOutput * this->hidden) + this->biasOutput);
@@ -84,6 +84,8 @@ void NeuralNetwork::NeuralNetwork::train(trainningSample sample, float learnning
     /////////////////////
 
     m outputErrors = sample.target - this->output;
+
+    std::cout << outputErrors << std::endl;
 
     // gradient = this->activationFuncD(output) * outputErrors * learnningRate
     // delta = gradient * hidden.tranposed
