@@ -1,5 +1,4 @@
 #include "NeuralNetwork.h"
-#include <iostream>
 void NeuralNetwork::NeuralNetwork::initializesWeights()
 {
     this->weightsInputToHidden.randu(this->hiddenNodes, this->inputNodes);
@@ -84,8 +83,6 @@ void NeuralNetwork::NeuralNetwork::train(trainningSample sample, float learnning
     /////////////////////
 
     m outputErrors = sample.target - this->output;
-
-    std::cout << outputErrors << std::endl;
 
     // gradient = this->activationFuncD(output) * outputErrors * learnningRate
     // delta = gradient * hidden.tranposed

@@ -6,8 +6,8 @@
 #include "lib/SquareDrawer.h"
 #include "lib/NeuralNetwork.h"
 
-const float WINDOW_WIDTH = 800;
-const float WINDOW_HEIGHT = 800;
+const float WINDOW_WIDTH = 400;
+const float WINDOW_HEIGHT = 400;
 
 void populateExamples(std::vector<NeuralNetwork::trainningSample> &examples)
 {
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[])
     nn.setActivationFunction(activationF);
     nn.setActivationFunctionDerivative(activationFD);
 
-    SquareDrawer sd(window, 5);
+    SquareDrawer sd(window, 10);
 
     auto rng = std::default_random_engine{};
     // Aplication main loop
@@ -96,7 +96,7 @@ int main(int argc, char const *argv[])
             // Neural network tranning
             for (auto e : examples)
             {
-                nn.train(e, 0.00001);
+                nn.train(e, 0.1);
             }
         }
 
