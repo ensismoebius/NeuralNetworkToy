@@ -20,10 +20,13 @@ class SquareDrawer
 private:
     unsigned int rows;
     unsigned int cols;
+    sf::Font font;
     std::vector<std::vector<sf::RectangleShape>> rectangles;
+    std::vector<std::vector<sf::Text>> texts;
+
 
 public:
-    SquareDrawer(sf::RenderWindow &window, unsigned int resolution);
+    SquareDrawer(sf::RenderWindow &window, unsigned int resolution, sf::Font font);
     void drawPoints(sf::RenderWindow &window, NeuralNetwork::NeuralNetwork &nn);
 };
 

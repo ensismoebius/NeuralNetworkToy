@@ -6,8 +6,17 @@
 #include "lib/SquareDrawer.h"
 #include "lib/NeuralNetwork.h"
 
-const float WINDOW_WIDTH = 400;
-const float WINDOW_HEIGHT = 400;
+////////////////////////////////////////////
+///////////////// SETTINGS /////////////////
+////////////////////////////////////////////
+const int SQUARE_SIZE = 50;
+const float WINDOW_WIDTH = 800;
+const float WINDOW_HEIGHT = 800;
+const float TRAINING_RATE = 0.01;
+const char FONT_PATH[] = "../Arial.ttf";
+////////////////////////////////////////////
+////////////// SETTINGS - END //////////////
+////////////////////////////////////////////
 
 void populateExamples(std::vector<NeuralNetwork::trainningSample> &examples)
 {
@@ -62,7 +71,7 @@ int main(int argc, char const *argv[])
     int32_t windowStyle = sf::Style::Default;
 
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Neural Network - float", windowStyle, settings);
-    window.setFramerateLimit(24);
+    window.setFramerateLimit(0);
 
     // Puts the orign at the center
     sf::Vector2u size = window.getSize();
@@ -83,7 +92,9 @@ int main(int argc, char const *argv[])
     nn.setActivationFunction(activationF);
     nn.setActivationFunctionDerivative(activationFD);
 
-    SquareDrawer sd(window, 10);
+    sf::Font font;
+    font.loadFromFile(FONT_PATH);
+    SquareDrawer sd(window, SQUARE_SIZE, font);
 
     auto rng = std::default_random_engine{};
     // Aplication main loop
@@ -96,7 +107,7 @@ int main(int argc, char const *argv[])
             // Neural network tranning
             for (auto e : examples)
             {
-                nn.train(e, 0.1);
+                nn.train(e, TRAINING_RATE);
             }
         }
 
