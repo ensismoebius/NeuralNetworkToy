@@ -20,7 +20,7 @@ const char FONT_PATH[] = "../Arial.ttf";
 
 void populateExamples(std::vector<NeuralNetwork::trainningSample> &examples)
 {
-    examples.resize(4);
+    examples.resize(17);
 
     examples[0].input = arma::Mat<float>(2, 1);
     examples[0].input.at(0, 0) = 0;
@@ -45,6 +45,84 @@ void populateExamples(std::vector<NeuralNetwork::trainningSample> &examples)
     examples[3].input.at(1, 0) = 1;
     examples[3].target = arma::Mat<float>(1, 1);
     examples[3].target.at(0, 0) = 0;
+
+    examples[4].input = arma::Mat<float>(2, 1);
+    examples[4].input.at(0, 0) = 4;
+    examples[4].input.at(1, 0) = 4;
+    examples[4].target = arma::Mat<float>(1, 1);
+    examples[4].target.at(0, 0) = 0;
+
+    examples[5].input = arma::Mat<float>(2, 1);
+    examples[5].input.at(0, 0) = 7;
+    examples[5].input.at(1, 0) = 0;
+    examples[5].target = arma::Mat<float>(1, 1);
+    examples[5].target.at(0, 0) = 1;
+
+    examples[6].input = arma::Mat<float>(2, 1);
+    examples[6].input.at(0, 0) = 0;
+    examples[6].input.at(1, 0) = 7;
+    examples[6].target = arma::Mat<float>(1, 1);
+    examples[6].target.at(0, 0) = 1;
+
+    examples[7].input = arma::Mat<float>(2, 1);
+    examples[7].input.at(0, 0) = 3;
+    examples[7].input.at(1, 0) = 2;
+    examples[7].target = arma::Mat<float>(1, 1);
+    examples[7].target.at(0, 0) = 1;
+
+    examples[8].input = arma::Mat<float>(2, 1);
+    examples[8].input.at(0, 0) = 2;
+    examples[8].input.at(1, 0) = 3;
+    examples[8].target = arma::Mat<float>(1, 1);
+    examples[8].target.at(0, 0) = 1;
+
+    examples[9].input = arma::Mat<float>(2, 1);
+    examples[9].input.at(0, 0) = 6;
+    examples[9].input.at(1, 0) = 7;
+    examples[9].target = arma::Mat<float>(1, 1);
+    examples[9].target.at(0, 0) = 1;
+
+    examples[10].input = arma::Mat<float>(2, 1);
+    examples[10].input.at(0, 0) = 2;
+    examples[10].input.at(1, 0) = 1;
+    examples[10].target = arma::Mat<float>(1, 1);
+    examples[10].target.at(0, 0) = 1;
+
+    examples[11].input = arma::Mat<float>(2, 1);
+    examples[11].input.at(0, 0) = 1;
+    examples[11].input.at(1, 0) = 2;
+    examples[11].target = arma::Mat<float>(1, 1);
+    examples[11].target.at(0, 0) = 1;
+
+    examples[12].input = arma::Mat<float>(2, 1);
+    examples[12].input.at(0, 0) = 7;
+    examples[12].input.at(1, 0) = 6;
+    examples[12].target = arma::Mat<float>(1, 1);
+    examples[12].target.at(0, 0) = 1;
+
+    examples[13].input = arma::Mat<float>(2, 1);
+    examples[13].input.at(0, 0) = 0;
+    examples[13].input.at(1, 0) = 2;
+    examples[13].target = arma::Mat<float>(1, 1);
+    examples[13].target.at(0, 0) = 1;
+
+    examples[14].input = arma::Mat<float>(2, 1);
+    examples[14].input.at(0, 0) = 2;
+    examples[14].input.at(1, 0) = 0;
+    examples[14].target = arma::Mat<float>(1, 1);
+    examples[14].target.at(0, 0) = 1;
+
+    examples[15].input = arma::Mat<float>(2, 1);
+    examples[15].input.at(0, 0) = 0;
+    examples[15].input.at(1, 0) = 4;
+    examples[15].target = arma::Mat<float>(1, 1);
+    examples[15].target.at(0, 0) = 1;
+
+    examples[16].input = arma::Mat<float>(2, 1);
+    examples[16].input.at(0, 0) = 4;
+    examples[16].input.at(1, 0) = 0;
+    examples[16].target = arma::Mat<float>(1, 1);
+    examples[16].target.at(0, 0) = 1;
 }
 
 // The activation function
@@ -88,7 +166,7 @@ int main(int argc, char const *argv[])
     std::vector<NeuralNetwork::trainningSample> examples;
     populateExamples(examples);
 
-    NeuralNetwork::NeuralNetwork nn(2, 4, 1);
+    NeuralNetwork::NeuralNetwork nn(2, 10, 1);
     nn.setActivationFunction(activationF);
     nn.setActivationFunctionDerivative(activationFD);
 

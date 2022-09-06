@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(toyNeuralNetwork
         VERSION 1.0
         DESCRIPTION "Multilayer Neural Network toy"
-        LANGUAGES CXX)  
+        LANGUAGES CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -46,4 +46,3 @@ if(OpenMP_CXX_FOUND)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${ARMADILLO_LIBRARIES})
-
