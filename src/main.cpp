@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <armadillo>
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 
 #include "lib/SquareDrawer.h"
@@ -12,7 +13,7 @@
 const int SQUARE_SIZE = 50;
 const float WINDOW_WIDTH = 800;
 const float WINDOW_HEIGHT = 800;
-const float TRAINING_RATE = 0.01;
+const float TRAINING_RATE = 0.001;
 const char FONT_PATH[] = "../Arial.ttf";
 ////////////////////////////////////////////
 ////////////// SETTINGS - END //////////////
@@ -20,7 +21,7 @@ const char FONT_PATH[] = "../Arial.ttf";
 
 void populateExamples(std::vector<NeuralNetwork::trainningSample> &examples)
 {
-    examples.resize(17);
+    examples.resize(19);
 
     examples[0].input = arma::Mat<float>(2, 1);
     examples[0].input.at(0, 0) = 0;
@@ -123,17 +124,35 @@ void populateExamples(std::vector<NeuralNetwork::trainningSample> &examples)
     examples[16].input.at(1, 0) = 0;
     examples[16].target = arma::Mat<float>(1, 1);
     examples[16].target.at(0, 0) = 1;
+
+    examples[17].input = arma::Mat<float>(2, 1);
+    examples[17].input.at(0, 0) = 15;
+    examples[17].input.at(1, 0) = 15;
+    examples[17].target = arma::Mat<float>(1, 1);
+    examples[17].target.at(0, 0) = 0;
+
+    examples[18].input = arma::Mat<float>(2, 1);
+    examples[18].input.at(0, 0) = 7;
+    examples[18].input.at(1, 0) = 9;
+    examples[18].target = arma::Mat<float>(1, 1);
+    examples[18].target.at(0, 0) = 1;
 }
 
 // The activation function
 float activationF(float value)
 {
+    // return value < 0 ? 0.0 : 1.0;
+    // return std::log(1 + std::pow(M_E, value));
+    // return value < 0.0 ? value * 0.01 : value;
     return 1.0 / (1 + std::exp(-value));
 }
 
 // The derivative of activation function
 float activationFD(float value)
 {
+    // return value != 0 ? 0 : value;
+    // return 1.0 / (1 + std::pow(M_E, -value));
+    // return value < 0.01 ? 0.0 : 1.0;
     return value * (1 - value);
 }
 
