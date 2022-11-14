@@ -34,19 +34,16 @@ m NeuralNetwork::NeuralNetwork::activationFuncD(m value)
     return value;
 }
 
-NeuralNetwork::NeuralNetwork::NeuralNetwork(unsigned int inputNodes, unsigned int hiddenNodes, unsigned int outputNodes)
-    : //
-    hidden(hiddenNodes, 1)
-    , //
-    biasHidden(hiddenNodes, 1)
-    , //
-    hiddenErrors(hiddenNodes, 1)
-    , //
-    output(outputNodes, 1)
-    , //
-    biasOutput(outputNodes, 1)
-    , //
-    outputErrors(outputNodes, 1) //
+NeuralNetwork::NeuralNetwork::NeuralNetwork(
+    unsigned int inputNodes, 
+    unsigned int hiddenNodes, 
+unsigned int outputNodes) :
+hidden(hiddenNodes, 1),       //
+biasHidden(hiddenNodes, 1),   //
+hiddenErrors(hiddenNodes, 1), //
+output(outputNodes, 1),       //
+biasOutput(outputNodes, 1),   //
+outputErrors(outputNodes, 1)  //
 {
     this->inputNodes = inputNodes;
     this->hiddenNodes = hiddenNodes;

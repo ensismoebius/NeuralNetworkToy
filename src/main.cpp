@@ -185,7 +185,7 @@ int main(int argc, char const *argv[])
     std::vector<NeuralNetwork::trainningSample> examples;
     populateExamples(examples);
 
-    NeuralNetwork::NeuralNetwork nn(2, 10, 1);
+    NeuralNetwork::NeuralNetwork nn(2, 40, 1);
     nn.setActivationFunction(activationF);
     nn.setActivationFunctionDerivative(activationFD);
 
