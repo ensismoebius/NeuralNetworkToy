@@ -12,7 +12,7 @@
 const int SQUARE_SIZE = 50;
 const float WINDOW_WIDTH = 800;
 const float WINDOW_HEIGHT = 800;
-const float TRAINING_RATE = 0.01;
+const float TRAINING_RATE = 0.001;
 const char FONT_PATH[] = "../Arial.ttf";
 ////////////////////////////////////////////
 ////////////// SETTINGS - END //////////////
@@ -166,7 +166,7 @@ int main(int argc, char const *argv[])
     std::vector<NeuralNetwork::trainningSample> examples;
     populateExamples(examples);
 
-    NeuralNetwork::NeuralNetwork nn(2, 10, 1);
+    NeuralNetwork::NeuralNetwork nn(2, 40, 1);
     nn.setActivationFunction(activationF);
     nn.setActivationFunctionDerivative(activationFD);
 
